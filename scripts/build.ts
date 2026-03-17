@@ -146,9 +146,9 @@ function replacePlaceholders(
         result = result.replaceAll(pattern, "{{args}}")
         break
       default:
-        // full tier: keep as-is; basic without argFormat: strip
+        // full tier: keep as-is; basic without argFormat: use readable fallback
         if (provider.tier === "basic") {
-          result = result.replaceAll(pattern, "")
+          result = result.replaceAll(pattern, `the specified ${arg.name}`)
         }
         break
     }
