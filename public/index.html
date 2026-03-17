@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>a11y-agent — Accessibility expertise for AI coding agents</title>
+    <meta name="description" content="Your agent makes beautiful UIs. This makes them usable by everyone. 3 skills for WCAG 2.2 AA compliance." />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="a11y-agent" />
+    <meta property="og:description" content="Your agent makes beautiful UIs. This makes them usable by everyone." />
+    <meta property="og:url" content="https://a11y-agent.vercel.app" />
+    <meta property="og:image" content="https://a11y-agent.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="a11y-agent — Accessibility expertise for AI coding agents" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="a11y-agent" />
+    <meta name="twitter:description" content="Your agent makes beautiful UIs. This makes them usable by everyone." />
+    <meta name="twitter:image" content="https://a11y-agent.vercel.app/og-image.png" />
+
+    <!-- Misc -->
+    <meta name="theme-color" content="#3d7a68" />
+    <link rel="canonical" href="https://a11y-agent.vercel.app" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #faf7f2;
+        --bg-warm: #f3ede4;
+        --text: #2c2825;
+        --text-muted: #6b6460;
+        --accent: #3d7a68;
+        --accent-light: #e8f0ed;
+        --accent-hover: #2e5f50;
+        --border: #e0d8cf;
+        --code-bg: #2c2825;
+        --code-text: #f0ebe4;
+        --radius: 12px;
+        --font-display: "Fraunces", Georgia, serif;
+        --font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* --- Grain overlay --- */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        opacity: 0.03;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 200px;
+        z-index: 100;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+        transition: color 0.2s;
+      }
+
+      a:hover {
+        color: var(--accent-hover);
+      }
+
+      /* --- Hero --- */
+      .hero {
+        padding: 6rem 2rem 4rem;
+        text-align: center;
+        max-width: 740px;
+        margin: 0 auto;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        font-family: var(--font-body);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: var(--accent-light);
+        padding: 0.35rem 1rem;
+        border-radius: 100px;
+        margin-bottom: 2rem;
+      }
+
+      .hero h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 6vw, 3.6rem);
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.25rem;
+        color: var(--text);
+      }
+
+      .hero h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        max-width: 480px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.5;
+      }
+
+      /* --- Install block --- */
+      .install {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        gap: 0;
+        max-width: 540px;
+        margin: 0 auto;
+      }
+
+      .install-command {
+        flex: 1;
+        font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+        font-size: 0.9rem;
+        line-height: 1;
+        background: var(--code-bg);
+        color: var(--code-text);
+        padding: 1.1rem 1.25rem;
+        border: none;
+        border-radius: var(--radius) 0 0 var(--radius);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+
+      .install-copy {
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        font-weight: 700;
+        line-height: 1;
+        background: var(--accent);
+        color: white;
+        border: none;
+        padding: 1.1rem 1.5rem;
+        border-radius: 0 var(--radius) var(--radius) 0;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+
+      .install-copy svg {
+        display: inline-block;
+        vertical-align: -2px;
+        margin-right: 0.35rem;
+      }
+
+      .install-copy:hover {
+        background: var(--accent-hover);
+      }
+
+      .install-copy:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .install-copy.copied {
+        background: var(--accent-hover);
+      }
+
+      /* --- Features --- */
+      .features {
+        padding: 3rem 2rem 5rem;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+
+      .feature-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        transition:
+          box-shadow 0.2s,
+          transform 0.2s;
+      }
+
+      .feature-card:hover {
+        box-shadow: 0 8px 30px rgba(44, 40, 37, 0.06);
+        transform: translateY(-2px);
+      }
+
+      .feature-name {
+        font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 0.15rem;
+      }
+
+      .feature-type {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+
+      .feature-desc {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        line-height: 1.55;
+        margin-bottom: 1.25rem;
+      }
+
+      .feature-detail {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+      }
+
+      .feature-detail code {
+        font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+        font-size: 0.78rem;
+        background: var(--bg-warm);
+        padding: 0.15em 0.4em;
+        border-radius: 4px;
+      }
+
+      /* --- Footer --- */
+      .footer {
+        margin-top: auto;
+        padding: 3rem 2rem;
+        text-align: center;
+        border-top: 1px solid var(--border);
+        background: var(--bg-warm);
+      }
+
+      .footer-install {
+        font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+
+      .footer-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        font-size: 0.85rem;
+      }
+
+      .footer-links a {
+        color: var(--text-muted);
+      }
+
+      .footer-links a:hover {
+        color: var(--accent);
+      }
+
+      .footer-sep {
+        color: var(--border);
+      }
+
+      /* --- Responsive --- */
+      @media (max-width: 720px) {
+        .hero {
+          padding: 4rem 1.5rem 3rem;
+        }
+
+        .features {
+          padding: 2rem 1.5rem 4rem;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .install {
+          flex-direction: column;
+          gap: 0;
+        }
+
+        .install-command {
+          border-radius: var(--radius) var(--radius) 0 0;
+          width: 100%;
+          text-align: center;
+        }
+
+        .install-copy {
+          border-radius: 0 0 var(--radius) var(--radius);
+          width: 100%;
+        }
+      }
+
+      .visually-hidden {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+      }
+
+      /* --- Motion safety --- */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "a11y-agent",
+          "description": "Accessibility expertise for AI coding agents. WCAG 2.2 AA: semantic HTML, ARIA, keyboard, contrast, focus, forms, motion, testing.",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Any",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "author": {
+            "@type": "Organization",
+            "name": "badass.dev",
+            "url": "https://badass.dev"
+          },
+          "url": "https://github.com/badass-courses/a11y-agent",
+          "license": "https://www.apache.org/licenses/LICENSE-2.0"
+        },
+        {
+          "@type": "WebPage",
+          "name": "a11y-agent — Accessibility expertise for AI coding agents",
+          "description": "Your agent makes beautiful UIs. This makes them usable by everyone. 3 skills for WCAG 2.2 AA compliance.",
+          "url": "https://a11y-agent.vercel.app"
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <span class="hero-badge">Agent Skill</span>
+        <h1>
+          Your agent makes beautiful UIs. This makes them
+          <em>usable by everyone.</em>
+        </h1>
+        <p>
+          Accessibility expertise for AI coding agents. WCAG 2.2 AA: semantic
+          HTML, ARIA, keyboard, contrast, focus, forms, motion, testing.
+        </p>
+        <div class="install">
+          <code class="install-command">
+            npx skills add badass-courses/a11y-agent
+          </code>
+          <button
+            class="install-copy"
+            type="button"
+            aria-label="Copy install command"
+          >
+            <svg class="icon-copy" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="icon-check" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>Copy
+          </button>
+        </div>
+      </section>
+
+      <section class="features" aria-label="What's included">
+        <div class="features-grid">
+          <article class="feature-card">
+            <h2 class="feature-name">a11y-agent</h2>
+            <div class="feature-type">Core skill — loads automatically</div>
+            <p class="feature-desc">
+              Deep accessibility knowledge for every code review and
+              implementation. Loaded into your agent's context whenever you
+              build UI.
+            </p>
+            <div class="feature-detail">
+              6 reference files:
+              <code>semantic-html</code>
+              <code>keyboard</code>
+              <code>aria</code>
+              <code>forms</code>
+              <code>focus</code>
+              <code>testing</code>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-name">/a11y-audit</h2>
+            <div class="feature-type">Command</div>
+            <p class="feature-desc">
+              Audit current component or page for accessibility issues. Produces
+              a prioritized report with WCAG references and fix suggestions.
+            </p>
+            <div class="feature-detail">
+              Focus areas:
+              <code>keyboard</code>
+              <code>aria</code>
+              <code>contrast</code>
+              <code>forms</code>
+              <code>structure</code>
+              <code>motion</code>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-name">/a11y-fix</h2>
+            <div class="feature-type">Command</div>
+            <p class="feature-desc">
+              Fix accessibility issues in current code. Works through findings
+              from most critical to least. Explains rationale, flags what to
+              test manually.
+            </p>
+            <div class="feature-detail">
+              Fixes:
+              <code>div&rarr;button</code>
+              <code>labels</code>
+              <code>headings</code>
+              <code>focus</code>
+              <code>contrast</code>
+              <code>motion</code>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div aria-live="polite" aria-atomic="true" class="visually-hidden" id="copy-status"></div>
+
+    <footer class="footer">
+      <div class="footer-install">npx skills add badass-courses/a11y-agent</div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="https://github.com/badass-courses/a11y-agent">GitHub</a>
+        <span class="footer-sep" aria-hidden="true">/</span>
+        <a href="https://badass.dev">badass.dev</a>
+      </nav>
+    </footer>
+
+    <script>
+      document.querySelectorAll(".install-copy").forEach((btn) => {
+        const iconCopy = btn.querySelector(".icon-copy")
+        const iconCheck = btn.querySelector(".icon-check")
+
+        btn.addEventListener("click", async () => {
+          const command = "npx skills add badass-courses/a11y-agent"
+          try {
+            await navigator.clipboard.writeText(command)
+            iconCopy.style.display = "none"
+            iconCheck.style.display = "inline-block"
+            btn.classList.add("copied")
+            btn.setAttribute("aria-label", "Copied to clipboard")
+            document.getElementById("copy-status").textContent = "Install command copied to clipboard"
+            setTimeout(() => {
+              iconCopy.style.display = "inline-block"
+              iconCheck.style.display = "none"
+              btn.classList.remove("copied")
+              btn.setAttribute("aria-label", "Copy install command")
+              document.getElementById("copy-status").textContent = ""
+            }, 2000)
+          } catch {}
+        })
+      })
+    </script>
+  </body>
+</html>
