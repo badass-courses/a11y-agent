@@ -2,27 +2,7 @@
 
 Accessibility expertise for AI coding agents.
 
-Your agent makes beautiful UIs. This skill makes them usable by everyone.
-
-## What's Included
-
-### Core Skill: `a11y-agent`
-
-Deep knowledge of web accessibility loaded automatically when building UI. Covers semantic HTML, ARIA, keyboard interaction, screen reader support, color contrast, focus management, responsive zoom, motion safety, and automated testing.
-
-**Reference files** provide detailed patterns for:
-
-- `semantic-html.md` — element selection, heading rules, form markup, anti-patterns
-- `keyboard-patterns.md` — roving tabindex, skip links, menu patterns, testing checklist
-- `aria-patterns.md` — modal dialogs, live regions, toggle buttons, tabs, date pickers
-- `forms-validation.md` — labels, validation, error handling, radio/checkbox patterns
-- `focus-management.md` — modals, client-side routing, dynamic content, React patterns
-- `testing-checklist.md` — manual workflow, automated testing with Jest/Cypress/axe, CI setup
-
-### Commands
-
-- `/a11y-audit` — Audit code for accessibility issues, produces prioritized report
-- `/a11y-fix` — Fix accessibility issues with correct patterns and rationale
+Your agent makes beautiful UIs. This makes them usable by everyone.
 
 ## Install
 
@@ -30,10 +10,33 @@ Deep knowledge of web accessibility loaded automatically when building UI. Cover
 npx skills add badass-courses/a11y-agent
 ```
 
-## Zero Competition
+## What's Inside
 
-As of March 2026, there are zero accessibility skills on skills.sh out of 88K+ total installs across the ecosystem. Every frontend-design skill (154K installs) teaches agents to make pretty things — none teach them to make accessible things.
+**`a11y-agent`** — Core skill, loads automatically. Deep web accessibility knowledge for every code review and implementation. 6 reference files covering semantic HTML, keyboard patterns, ARIA, forms, focus management, and testing.
+
+**`/a11y-audit [area]`** — Audit current component or page. Produces a prioritized report with WCAG references and fix suggestions.
+
+**`/a11y-fix [area]`** — Fix accessibility issues in current code. Explains rationale, flags what to test manually.
+
+Areas: `keyboard` `aria` `contrast` `forms` `structure` `motion` or `all`
 
 ## License
 
 Apache-2.0
+
+```
+
+             o
+            /|\         "You can't shove chocolate chips
+            / \          into an already baked muffin."
+
+         can they
+        ┌─────────┐
+        │ Tab?    │  keyboard
+        │ See?    │  contrast, zoom
+        │ Hear?   │  screen reader
+        │ Pause?  │  motion safety
+        └─────────┘
+
+                        badass.dev
+```
