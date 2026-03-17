@@ -1,0 +1,11 @@
+{
+  "name": "a11y-agent",
+  "description": "Accessibility skills for AI coding agents. Includes 3 skills (2 user-invokable: /a11y-audit, /a11y-fix).",
+  "version": "1.0.0",
+  "author": {
+    "name": "badass.dev"
+  },
+  "homepage": "https://github.com/badass-courses/a11y-agent",
+  "repository": "https://github.com/badass-courses/a11y-agent",
+  "skills": "./.claude/skills"
+}

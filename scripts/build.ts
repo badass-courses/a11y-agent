@@ -31,13 +31,13 @@ interface ProviderConfig {
 
 const PROVIDERS: Record<string, ProviderConfig> = {
   "claude-code": { configDir: ".claude", tier: "full" },
-  opencode:      { configDir: ".opencode", tier: "full" },
-  agents:        { configDir: ".agents", tier: "moderate", argFormat: "angle" },
-  codex:         { configDir: ".codex", tier: "moderate", argFormat: "dollar" },
-  cursor:        { configDir: ".cursor", tier: "basic" },
-  gemini:        { configDir: ".gemini", tier: "basic", argFormat: "generic" },
-  kiro:          { configDir: ".kiro", tier: "basic" },
-  pi:            { configDir: ".pi", tier: "basic" },
+  opencode: { configDir: ".opencode", tier: "full" },
+  agents: { configDir: ".agents", tier: "moderate", argFormat: "angle" },
+  codex: { configDir: ".codex", tier: "moderate", argFormat: "dollar" },
+  cursor: { configDir: ".cursor", tier: "basic" },
+  gemini: { configDir: ".gemini", tier: "basic", argFormat: "generic" },
+  kiro: { configDir: ".kiro", tier: "basic" },
+  pi: { configDir: ".pi", tier: "basic" },
 }
 
 // --- Frontmatter Parser ---
@@ -227,6 +227,22 @@ async function build() {
 
   console.log(`✓ Built ${skills.length} skills × ${Object.keys(PROVIDERS).length} providers = ${filesWritten} files`)
   console.log(`  Commands: ${availableCommands}`)
+
+  // Sync Claude Code output to repo .claude/skills/ (checked into git)
+  const claudeSrc = path.join(DIST_DIR, "claude-code", ".claude", "skills")
+  const claudeDest = path.join(".claude", "skills")
+  if (existsSync(claudeDest)) rmSync(claudeDest, { recursive: true, force: true })
+  mkdirSync(claudeDest, { recursive: true })
+
+  // Copy each skill directory
+  const claudeGlob = new Bun.Glob("*")
+  for await (const entry of claudeGlob.scan({ cwd: claudeSrc, onlyFiles: false })) {
+    const src = path.join(claudeSrc, entry)
+    const dest = path.join(claudeDest, entry)
+    cpSync(src, dest, { recursive: true })
+  }
+
+  console.log(`  Synced to .claude/skills/`)
 }
 
 build().catch(err => {

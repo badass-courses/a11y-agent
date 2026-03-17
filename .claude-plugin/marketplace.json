@@ -1,0 +1,24 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "a11y-agent",
+  "metadata": {
+    "description": "Accessibility expertise for web development. 1 core skill, 2 commands for auditing and fixing a11y issues."
+  },
+  "owner": {
+    "name": "badass.dev"
+  },
+  "plugins": [
+    {
+      "name": "a11y-agent",
+      "description": "Accessibility skills for AI coding agents. Includes /a11y-audit and /a11y-fix commands plus a core accessibility knowledge skill.",
+      "version": "1.0.0",
+      "author": {
+        "name": "badass.dev"
+      },
+      "source": "./",
+      "category": "accessibility",
+      "homepage": "https://github.com/badass-courses/a11y-agent",
+      "tags": ["accessibility", "a11y", "wcag", "aria", "skills"]
+    }
+  ]
+}
