@@ -222,5 +222,3 @@ For every component, ask:
 Remember: tools can't catch everything. Test with a keyboard. Test with a screen reader. Test with real users.
 
 ---
-
-*For the full workshop experience with video walkthroughs, exercises, and deep dives, visit [testingaccessibility.com](https://testingaccessibility.com).*
