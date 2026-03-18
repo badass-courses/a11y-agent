@@ -396,6 +396,73 @@ const suites: TestCase[] = [
     rubric: reviewRubric(SPA_ISSUES),
   },
 
+  // ── a11y-test ────────────────────────
+  {
+    skill: "a11y-test",
+    fixture: "bad-form.tsx",
+    prompt: "Write accessibility tests for this form component. Don't ask clarifying questions. Use Jest + Testing Library. Cover unit tests.",
+    knownIssues: FORM_ISSUES,
+    rubric: [
+      { name: "Tests for labels via getByRole/getByLabelText", description: "Uses accessible queries, not getByTestId, to find form controls", weight: 10 },
+      { name: "Tests keyboard reachability (Tab)", description: "Verifies inputs and button are reachable via Tab key", weight: 10 },
+      { name: "Tests submit button accessible name", description: "Asserts the submit button has a discernible accessible name", weight: 8 },
+      { name: "Tests radio group keyboard interaction", description: "Checks radio group can be operated with arrow keys or at minimum is in a fieldset", weight: 8 },
+      { name: "Tests error announcement", description: "Checks error message is in a live region or has alert role", weight: 8 },
+      { name: "Tests use semantic queries", description: "Uses getByRole, getByLabelText instead of getByTestId or container.querySelector", weight: 8 },
+      { name: "Tests would actually fail on the fixture", description: "The tests are written to catch the actual issues in the bad code, not just pass", weight: 10 },
+      { name: "Valid test code", description: "Test code is syntactically valid JS/TS that could run", weight: 8 },
+    ],
+  },
+  {
+    skill: "a11y-test",
+    fixture: "bad-modal.tsx",
+    prompt: "Write accessibility tests for this modal component. Don't ask clarifying questions. Use Jest + Testing Library. Cover unit tests.",
+    knownIssues: MODAL_ISSUES,
+    rubric: [
+      { name: "Tests for dialog role", description: "Asserts the modal has role=dialog or uses dialog element", weight: 10 },
+      { name: "Tests focus moves into modal on open", description: "Verifies focus is sent into the modal when it opens", weight: 10 },
+      { name: "Tests focus trap", description: "Checks that Tab cycles within the modal, not escaping to background", weight: 10 },
+      { name: "Tests Escape closes modal", description: "Verifies pressing Escape key closes the modal", weight: 10 },
+      { name: "Tests focus returns to trigger", description: "Checks focus goes back to the button that opened the modal", weight: 8 },
+      { name: "Tests close button is a real button", description: "Asserts close control is keyboard accessible (button, not span)", weight: 8 },
+      { name: "Tests would actually fail on the fixture", description: "The tests catch the real issues in the bad code", weight: 10 },
+      { name: "Valid test code", description: "Syntactically valid JS/TS", weight: 8 },
+    ],
+  },
+  {
+    skill: "a11y-test",
+    fixture: "bad-nav.tsx",
+    prompt: "Write accessibility tests for this navigation component. Don't ask clarifying questions. Use Jest + Testing Library. Cover unit tests.",
+    knownIssues: NAV_ISSUES,
+    rubric: [
+      { name: "Tests nav items are buttons", description: "Asserts menu toggles are real buttons via getByRole('button')", weight: 10 },
+      { name: "Tests aria-expanded toggles", description: "Checks aria-expanded updates when menu opens/closes", weight: 10 },
+      { name: "Tests hidden submenu not reachable", description: "Verifies closed submenu links are not in tab order", weight: 10 },
+      { name: "Tests Escape closes submenu", description: "Checks Escape key handler works", weight: 8 },
+      { name: "Tests nav landmarks have labels", description: "Checks navigation landmarks have distinguishing aria-labels", weight: 8 },
+      { name: "Tests would actually fail on the fixture", description: "Tests catch the real issues", weight: 10 },
+      { name: "Valid test code", description: "Syntactically valid JS/TS", weight: 8 },
+    ],
+  },
+
+  // ── a11y-scan ───────────────────────
+  {
+    skill: "a11y-scan",
+    fixture: null,
+    prompt: "Generate an axe-core scan script for a Next.js app running on localhost:3000. Don't ask clarifying questions. Scan the homepage and /dashboard route. Output the complete script.",
+    knownIssues: [],
+    rubric: [
+      { name: "Uses @axe-core/playwright", description: "Script imports and uses @axe-core/playwright (not raw axe-core)", weight: 10 },
+      { name: "Uses Playwright browser", description: "Launches a real browser via Playwright", weight: 8 },
+      { name: "Scans multiple routes", description: "Scans both / and /dashboard as requested", weight: 8 },
+      { name: "Categorizes by severity", description: "Groups or sorts violations by severity (critical, serious, etc.)", weight: 8 },
+      { name: "Outputs human-readable results", description: "Formats results as readable report, not just raw JSON", weight: 6 },
+      { name: "Saves results to file", description: "Writes scan results to a JSON file for tracking", weight: 6 },
+      { name: "Valid runnable script", description: "Script is syntactically valid and could execute with the right deps", weight: 10 },
+      { name: "Includes WCAG tags or rulesets", description: "Configures axe with WCAG tags (e.g. wcag2aa) or specific rules", weight: 6 },
+    ],
+  },
+
   // ── a11y-component (no fixture, scaffold from scratch) ──
   {
     skill: "a11y-component",
