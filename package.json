@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "bun run scripts/build.ts",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test:skills": "bun run tests/run.ts"
   },
   "files": [
     "dist/**",
