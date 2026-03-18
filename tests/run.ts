@@ -55,6 +55,7 @@ const args = process.argv.slice(2)
 const flagSkill = args.find((a) => a.startsWith("--skill="))?.split("=")[1]
 const flagFixture = args.find((a) => a.startsWith("--fixture="))?.split("=")[1]
 const flagVerbose = args.includes("--verbose") || args.includes("-v")
+const flagOffset = Number(args.find((a) => a.startsWith("--offset="))?.split("=")[1] || "0")
 const flagDryRun = args.includes("--dry-run")
 const flagHelp = args.includes("--help") || args.includes("-h")
 
@@ -69,6 +70,7 @@ if (flagHelp) {
     --skill=NAME      run only tests for this skill
     --fixture=NAME    run only tests using this fixture
     --verbose, -v     show per-criterion score breakdown
+    --offset=N        skip first N tests
     --dry-run         show test plan without running
     --help, -h        show this help
 
@@ -516,19 +518,29 @@ async function judge(test: TestCase, output: string): Promise<Score[]> {
   return parseJudgeResponse(raw, test.rubric)
 }
 
+function extractJson(raw: string): string | null {
+  // Strip markdown fences: ```json ... ``` or ``` ... ```
+  const fenced = raw.match(/```(?:json)?\s*\n?([\s\S]*?)```/)
+  const text = fenced ? fenced[1].trim() : raw.trim()
+
+  // Find the outermost [ ... ] (greedy to capture nested structures)
+  const bracketMatch = text.match(/\[[\s\S]*\]/)
+  return bracketMatch ? bracketMatch[0] : null
+}
+
 function parseJudgeResponse(raw: string, rubric: Criterion[]): Score[] {
-  // Try to extract JSON array from response
-  const jsonMatch = raw.match(/\[[\s\S]*?\]/)
-  if (jsonMatch) {
+  const json = extractJson(raw)
+  if (json) {
     try {
-      const parsed = JSON.parse(jsonMatch[0]) as Score[]
-      // Validate and clamp scores
-      return parsed.map((s, i) => ({
-        name: s.name || rubric[i]?.name || `criterion-${i}`,
-        score: Math.min(Math.max(0, s.score), s.maxScore),
-        maxScore: rubric[i]?.weight ?? s.maxScore,
-        reasoning: s.reasoning || "",
-      }))
+      const parsed = JSON.parse(json) as Score[]
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.map((s, i) => ({
+          name: s.name || rubric[i]?.name || `criterion-${i}`,
+          score: Math.min(Math.max(0, s.score), s.maxScore),
+          maxScore: rubric[i]?.weight ?? s.maxScore,
+          reasoning: s.reasoning || "",
+        }))
+      }
     } catch {
       // fall through to fallback
     }
@@ -617,6 +629,7 @@ async function main() {
   let tests = suites
   if (flagSkill) tests = tests.filter((t) => t.skill === flagSkill)
   if (flagFixture) tests = tests.filter((t) => t.fixture === flagFixture)
+  if (flagOffset > 0) tests = tests.slice(flagOffset)
 
   if (tests.length === 0) {
     console.error("No tests match filters")
