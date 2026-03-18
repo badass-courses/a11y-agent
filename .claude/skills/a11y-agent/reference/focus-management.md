@@ -13,6 +13,17 @@ Close → Focus returns to TRIGGER element
        → Background restored
 ```
 
+### Modern Approach: `inert`
+
+The `inert` attribute is the recommended way to make background content non-interactive. It disables focus, click events, and removes from the accessibility tree in one attribute:
+
+```javascript
+document.querySelector('main').inert = true;   // background locked
+document.querySelector('main').inert = false;  // background restored
+```
+
+Prefer `inert` over manually managing `aria-hidden="true"` + `tabindex="-1"` on every background element.
+
 ### Implementation with `inert`
 ```javascript
 function openModal() {
@@ -74,6 +85,18 @@ When navigating between "pages" with JavaScript:
 
 // Or announce via live region
 setAnnouncement(`Navigated to ${pageName}`);
+```
+
+### Menu State Reset
+
+When navigating between routes, reset any open menus/dropdowns. Client-side routing doesn't trigger a page refresh, so menu state persists across "pages" unless explicitly cleared.
+
+```javascript
+// Reset on route change
+useEffect(() => {
+  setMenuOpen(false);
+  setActiveSubmenu(null);
+}, [location.pathname]);
 ```
 
 ## Skip Links Focus

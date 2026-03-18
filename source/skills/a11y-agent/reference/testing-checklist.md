@@ -44,6 +44,40 @@ What flow are you testing? Which pages? What are the critical components?
 - Check: headings announced properly, landmarks navigable, forms labeled, dynamic content announced
 - Remember: NVDA has Browse mode (Arrow keys = headings) and Focus mode (Arrow keys = interact). Insert+Space toggles.
 
+### 8. Windows High Contrast Mode
+- Enable: Settings → Accessibility → Contrast themes
+- Check: custom focus rings still visible, CSS backgrounds don't disappear, icons remain distinguishable
+- Use `forced-colors` media query to provide alternatives:
+
+```css
+@media (forced-colors: active) {
+  .custom-focus { outline: 2px solid CanvasText; }
+  .icon-button { border: 1px solid ButtonText; }
+}
+```
+
+## Pre-Automation with Storybook
+
+Storybook renders components in isolation — useful for keyboard and screen reader spot-checks before writing automated tests.
+
+- Install the Storybook a11y addon (powered by axe-core) for automatic per-story checks
+- Use full-screen canvas mode (`/iframe.html`) for reliable screen reader testing outside Storybook's wrapping iframe
+- The a11y addon may report zero violations while a component is keyboard-inoperable (e.g., div instead of button). Always test beyond what the addon reports.
+- Treat Storybook as a pre-automation step: identify issues visually, then codify as Jest/Cypress tests
+
+## Accessibility Tree Snapshot Testing
+
+Use Puppeteer to capture the Accessibility Tree as JSON for regression testing:
+
+```javascript
+const snapshot = await page.accessibility.snapshot({ interestingOnly: false });
+expect(snapshot).toMatchSnapshot();
+```
+
+- Scope snapshots to specific subtrees (e.g., header only) to reduce brittleness — full-page snapshots break on any content change
+- Not a replacement for actual screen reader testing — it's an approximation
+- Use `interestingOnly: false` for detailed output including generic nodes
+
 ## Automated Testing Integration
 
 ### Linting (Write-time)

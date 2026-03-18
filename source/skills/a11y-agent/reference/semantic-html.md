@@ -84,3 +84,5 @@
 - Form with only placeholder text — no persistent label
 - Missing `<html lang="en">` — screen readers can't determine language
 - Missing viewport meta tag — breaks zoom/responsive
+- CSS Grid/Flexbox ≠ semantic structure — a calendar grid of `<div>` buttons should be a `<table>` with `<th scope="col">` for proper row/column relationships in screen readers
+- `<ul>` without bullet styles: VoiceOver in Safari strips `role="list"` semantics. Add explicit `role="list"` as a workaround even though it seems redundant — prefer working screen reader output over passing lint rules

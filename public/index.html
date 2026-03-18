@@ -4,23 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>a11y-agent — Accessibility expertise for AI coding agents</title>
-    <meta name="description" content="Your agent makes beautiful UIs. This makes them usable by everyone. 3 skills for WCAG 2.2 AA compliance." />
+    <meta
+      name="description"
+      content="Your agent makes beautiful UIs. This makes them usable by everyone. 8 skills for WCAG 2.2 AA compliance."
+    />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="a11y-agent" />
-    <meta property="og:description" content="Your agent makes beautiful UIs. This makes them usable by everyone." />
+    <meta
+      property="og:description"
+      content="Your agent makes beautiful UIs. This makes them usable by everyone."
+    />
     <meta property="og:url" content="https://a11y-agent.vercel.app" />
-    <meta property="og:image" content="https://a11y-agent.vercel.app/og-image.png" />
+    <meta
+      property="og:image"
+      content="https://a11y-agent.vercel.app/og-image.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="a11y-agent — Accessibility expertise for AI coding agents" />
+    <meta
+      property="og:image:alt"
+      content="a11y-agent — Accessibility expertise for AI coding agents"
+    />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="a11y-agent" />
-    <meta name="twitter:description" content="Your agent makes beautiful UIs. This makes them usable by everyone." />
-    <meta name="twitter:image" content="https://a11y-agent.vercel.app/og-image.png" />
+    <meta
+      name="twitter:description"
+      content="Your agent makes beautiful UIs. This makes them usable by everyone."
+    />
+    <meta
+      name="twitter:image"
+      content="https://a11y-agent.vercel.app/og-image.png"
+    />
 
     <!-- Misc -->
     <meta name="theme-color" content="#3d7a68" />
@@ -202,14 +220,23 @@
       /* --- Features --- */
       .features {
         padding: 3rem 2rem 5rem;
-        max-width: 960px;
+        max-width: 1020px;
         margin: 0 auto;
       }
 
       .features-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .feature-card--foundation {
+        grid-column: 1 / -1;
+      }
+
+      /* Last card spans full width when alone in its row */
+      .feature-card:last-child {
+        grid-column: 1 / -1;
       }
 
       .feature-card {
@@ -357,36 +384,36 @@
       }
     </style>
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "SoftwareApplication",
-          "name": "a11y-agent",
-          "description": "Accessibility expertise for AI coding agents. WCAG 2.2 AA: semantic HTML, ARIA, keyboard, contrast, focus, forms, motion, testing.",
-          "applicationCategory": "DeveloperApplication",
-          "operatingSystem": "Any",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "name": "a11y-agent",
+            "description": "Accessibility expertise for AI coding agents. 8 skills for WCAG 2.2 AA: audit, fix, scan, test, scaffold, review, advocate.",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Any",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "author": {
+              "@type": "Organization",
+              "name": "badass.dev",
+              "url": "https://badass.dev"
+            },
+            "url": "https://github.com/badass-courses/a11y-agent",
+            "license": "https://www.apache.org/licenses/LICENSE-2.0"
           },
-          "author": {
-            "@type": "Organization",
-            "name": "badass.dev",
-            "url": "https://badass.dev"
-          },
-          "url": "https://github.com/badass-courses/a11y-agent",
-          "license": "https://www.apache.org/licenses/LICENSE-2.0"
-        },
-        {
-          "@type": "WebPage",
-          "name": "a11y-agent — Accessibility expertise for AI coding agents",
-          "description": "Your agent makes beautiful UIs. This makes them usable by everyone. 3 skills for WCAG 2.2 AA compliance.",
-          "url": "https://a11y-agent.vercel.app"
-        }
-      ]
-    }
+          {
+            "@type": "WebPage",
+            "name": "a11y-agent — Accessibility expertise for AI coding agents",
+            "description": "Your agent makes beautiful UIs. This makes them usable by everyone. 8 skills for WCAG 2.2 AA compliance.",
+            "url": "https://a11y-agent.vercel.app"
+          }
+        ]
+      }
     </script>
   </head>
   <body>
@@ -410,29 +437,64 @@
             type="button"
             aria-label="Copy install command"
           >
-            <svg class="icon-copy" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="icon-check" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>Copy
+            <svg
+              class="icon-copy"
+              aria-hidden="true"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" />
+              <path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              /></svg
+            ><svg
+              class="icon-check"
+              aria-hidden="true"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="display: none"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Copy
           </button>
         </div>
       </section>
 
       <section class="features" aria-label="What's included">
         <div class="features-grid">
-          <article class="feature-card">
+          <article class="feature-card feature-card--foundation">
             <h2 class="feature-name">a11y-agent</h2>
-            <div class="feature-type">Core skill — loads automatically</div>
+            <div class="feature-type">Foundation — loads automatically</div>
             <p class="feature-desc">
               Deep accessibility knowledge for every code review and
               implementation. Loaded into your agent's context whenever you
               build UI.
             </p>
             <div class="feature-detail">
-              6 reference files:
+              10 reference files:
               <code>semantic-html</code>
               <code>keyboard</code>
               <code>aria</code>
               <code>forms</code>
               <code>focus</code>
               <code>testing</code>
+              <code>gotchas</code>
+              <code>screen-readers</code>
+              <code>routing</code>
+              <code>widgets</code>
             </div>
           </article>
 
@@ -440,17 +502,17 @@
             <h2 class="feature-name">/a11y-audit</h2>
             <div class="feature-type">Command</div>
             <p class="feature-desc">
-              Audit current component or page for accessibility issues. Produces
-              a prioritized report with WCAG references and fix suggestions.
+              Structured accessibility assessment. Walks through keyboard &rarr;
+              tools &rarr; contrast &rarr; zoom &rarr; screen readers. Stores
+              results for tracking progress.
             </p>
             <div class="feature-detail">
-              Focus areas:
               <code>keyboard</code>
-              <code>aria</code>
+              <code>headings</code>
+              <code>axe scan</code>
               <code>contrast</code>
-              <code>forms</code>
-              <code>structure</code>
-              <code>motion</code>
+              <code>zoom</code>
+              <code>screen readers</code>
             </div>
           </article>
 
@@ -458,25 +520,109 @@
             <h2 class="feature-name">/a11y-fix</h2>
             <div class="feature-type">Command</div>
             <p class="feature-desc">
-              Fix accessibility issues in current code. Works through findings
-              from most critical to least. Explains rationale, flags what to
-              test manually.
+              Fix accessibility issues from audit, scan, or review findings.
+              Explains rationale, verifies each fix, flags what to test
+              manually.
             </p>
             <div class="feature-detail">
-              Fixes:
               <code>div&rarr;button</code>
               <code>labels</code>
-              <code>headings</code>
               <code>focus</code>
-              <code>contrast</code>
-              <code>motion</code>
+              <code>mega menu</code>
+              <code>routing</code>
+              <code>modals</code>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-name">/a11y-scan</h2>
+            <div class="feature-type">Command</div>
+            <p class="feature-desc">
+              Run automated axe-core scans via Playwright. Captures WCAG
+              violations, compares with previous runs, tracks remediation
+              progress.
+            </p>
+            <div class="feature-detail">
+              <code>axe-core</code>
+              <code>playwright</code>
+              <code>WCAG violations</code>
+              <code>trend tracking</code>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-name">/a11y-test</h2>
+            <div class="feature-type">Command</div>
+            <p class="feature-desc">
+              TDD for accessibility. Write tests that fail when a11y breaks,
+              then fix. Jest + Testing Library, Cypress + cypress-axe, Puppeteer
+              snapshots.
+            </p>
+            <div class="feature-detail">
+              <code>jest</code>
+              <code>testing-library</code>
+              <code>cypress-axe</code>
+              <code>CI</code>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-name">/a11y-component</h2>
+            <div class="feature-type">Command</div>
+            <p class="feature-desc">
+              Scaffold accessible components with correct ARIA, keyboard
+              handling, and focus management baked in from the start.
+            </p>
+            <div class="feature-detail">
+              <code>modal</code>
+              <code>menu</code>
+              <code>tabs</code>
+              <code>accordion</code>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-name">/a11y-review</h2>
+            <div class="feature-type">Command</div>
+            <p class="feature-desc">
+              Lightweight code review for accessibility. Checks markup, ARIA,
+              keyboard handling, and test coverage in changed files.
+            </p>
+            <div class="feature-detail">
+              <code>markup</code>
+              <code>ARIA</code>
+              <code>keyboard</code>
+              <code>styles</code>
+              <code>tests</code>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-name">/a11y-advocate</h2>
+            <div class="feature-type">Command</div>
+            <p class="feature-desc">
+              Build accessibility culture. Generate statements, prioritize
+              issues, write tickets, create team checklists, produce risk
+              assessments.
+            </p>
+            <div class="feature-detail">
+              <code>statement</code>
+              <code>prioritize</code>
+              <code>ticket</code>
+              <code>checklist</code>
+              <code>risk</code>
             </div>
           </article>
         </div>
       </section>
     </main>
 
-    <div aria-live="polite" aria-atomic="true" class="visually-hidden" id="copy-status"></div>
+    <div
+      aria-live="polite"
+      aria-atomic="true"
+      class="visually-hidden"
+      id="copy-status"
+    ></div>
 
     <footer class="footer">
       <div class="footer-install">npx skills add badass-courses/a11y-agent</div>
@@ -489,28 +635,29 @@
 
     <script>
       document.querySelectorAll(".install-copy").forEach((btn) => {
-        const iconCopy = btn.querySelector(".icon-copy")
-        const iconCheck = btn.querySelector(".icon-check")
+        const iconCopy = btn.querySelector(".icon-copy");
+        const iconCheck = btn.querySelector(".icon-check");
 
         btn.addEventListener("click", async () => {
-          const command = "npx skills add badass-courses/a11y-agent"
+          const command = "npx skills add badass-courses/a11y-agent";
           try {
-            await navigator.clipboard.writeText(command)
-            iconCopy.style.display = "none"
-            iconCheck.style.display = "inline-block"
-            btn.classList.add("copied")
-            btn.setAttribute("aria-label", "Copied to clipboard")
-            document.getElementById("copy-status").textContent = "Install command copied to clipboard"
+            await navigator.clipboard.writeText(command);
+            iconCopy.style.display = "none";
+            iconCheck.style.display = "inline-block";
+            btn.classList.add("copied");
+            btn.setAttribute("aria-label", "Copied to clipboard");
+            document.getElementById("copy-status").textContent =
+              "Install command copied to clipboard";
             setTimeout(() => {
-              iconCopy.style.display = "inline-block"
-              iconCheck.style.display = "none"
-              btn.classList.remove("copied")
-              btn.setAttribute("aria-label", "Copy install command")
-              document.getElementById("copy-status").textContent = ""
-            }, 2000)
+              iconCopy.style.display = "inline-block";
+              iconCheck.style.display = "none";
+              btn.classList.remove("copied");
+              btn.setAttribute("aria-label", "Copy install command");
+              document.getElementById("copy-status").textContent = "";
+            }, 2000);
           } catch {}
-        })
-      })
+        });
+      });
     </script>
   </body>
 </html>

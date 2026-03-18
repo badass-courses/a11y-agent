@@ -15,6 +15,19 @@ You can't shove chocolate chips into an already baked muffin. Accessibility belo
 
 WCAG 2.2 Level AA is the minimum target. Aim higher when you can.
 
+## Gotchas — What Claude Gets Wrong
+
+These are Claude's most frequent accessibility mistakes. Check every time.
+
+1. **Using `role="button"` on a `<div>` instead of `<button>`** — `<button>` gives focusability, Enter/Space, and role for free. Just use it.
+2. **Adding ARIA where native HTML suffices** — First rule of ARIA: don't use it if a native element works. `<nav>` > `<div role="navigation">`.
+3. **Using `opacity: 0` to hide content** — Element stays in tab order and Accessibility Tree. Use `display: none` or `hidden` attribute instead.
+4. **Forgetting focus return on close** — When modal/menu/popup closes, focus MUST return to trigger element.
+5. **Missing Escape key support** — Every overlay must close on Escape. Not optional.
+6. **Not using `inert` on modal backgrounds** — Use `inert` attribute on background content instead of manually managing `aria-hidden` + `tabindex="-1"` on every element.
+
+→ *Consult reference/gotchas.md for the complete list with code examples.*
+
 ## The POUR Framework (WCAG Categories)
 
 All accessibility work maps to four principles:
@@ -95,6 +108,10 @@ ARIA provides roles, states, and properties that communicate accessibility infor
 
 Don't rely on color alone to convey information. Use text labels, patterns, or icons alongside color.
 
+**Important nuance:** Text INSIDE UI components (e.g., button label) still needs to meet 4.5:1 for text < 24px, even though the button's background/border only needs 3:1. Non-text contrast (1.4.11) applies to backgrounds, borders, icons — not to text within components.
+
+**Dark mode caveat:** Hardcoded colors that pass in light mode often fail in dark mode. Test contrast in all themes. Watch for color variables that don't adapt.
+
 **Tools:** Colour Contrast Analyser (CCA desktop app), Chrome DevTools color picker, WebAIM Contrast Checker.
 
 ## Images & Text Alternatives
@@ -127,6 +144,25 @@ SVG accessibility: Add `role="img"` and `aria-label` or use `<title>` inside the
 - **Roving tabindex:** For composite widgets (date pickers, tab lists), make the group a single tab stop. Use arrow keys internally. Set `tabindex="0"` on the active item, `tabindex="-1"` on all others.
 
 → *Consult reference/focus-management.md for implementation patterns.*
+
+## Client-Side Routing
+
+JavaScript routing breaks the browser's native page-refresh behavior. Screen readers and keyboards lose critical signals.
+
+**What breaks:**
+- Screen readers don't announce new "page" (no title change event)
+- Focus stays on the clicked link instead of resetting to new content
+- Keyboard users don't get the fresh tab-order reset of a page load
+
+**What to do:**
+1. Update `document.title` on every route change (React Helmet, Next.js Head, etc.)
+2. Move focus to the new page's `<main>` or `<h1>` after navigation
+3. Announce the page change via ARIA live region
+4. Reset any open menus/dropdowns state on navigation
+
+**Best practice:** Let pages refresh when you can. `<a href>` beats `<Link>` when full SPA behavior isn't needed. The browser handles focus reset, title changes, and screen reader announcements for free.
+
+→ *Consult reference/client-side-routing.md for framework-specific patterns.*
 
 ## Responsive Design & Zoom
 
@@ -166,6 +202,8 @@ Different hiding techniques have different accessibility implications:
 - `.visually-hidden` class — not visible but readable by screen readers
 - `aria-hidden="true"` — hidden from screen readers but still visible and focusable (add `tabindex="-1"` to interactive elements)
 
+→ *Consult reference/widget-patterns.md for mega menu visibility patterns.*
+
 ```css
 .visually-hidden {
   clip: rect(0 0 0 0);
@@ -191,6 +229,7 @@ Automated tools catch ~30-50% of accessibility issues. Always combine with manua
 Key Testing Library queries for accessibility: `getByRole`, `getByLabelText`, `getByAltText`.
 
 → *Consult reference/testing-checklist.md for the manual + automated testing workflow.*
+→ *Consult reference/screen-readers.md for screen reader testing guidance.*
 
 ## Anti-Patterns — DO NOT
 

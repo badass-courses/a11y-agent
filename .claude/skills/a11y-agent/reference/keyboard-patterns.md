@@ -114,6 +114,20 @@ function handleKeyUp(event) {
 }
 ```
 
+## Preventing Scroll on Arrow Keys
+
+When overriding arrow keys for widget navigation (date pickers, tabs, menus), prevent default on `keydown` to stop page scrolling:
+
+```javascript
+function handleKeyDown(event) {
+  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+    event.preventDefault();
+  }
+}
+```
+
+Handle the actual navigation logic on `keyup` to avoid key-repeat issues. Use `keydown` only for `preventDefault()`.
+
 ## Keyboard Testing Checklist
 
 1. Tab through entire page — can you reach every control?

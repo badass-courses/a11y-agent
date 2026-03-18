@@ -163,3 +163,30 @@ Set `aria-current="page"` on the link matching the current URL. Screen readers a
 - Using `aria-label` on non-interactive `<div>` or `<span>` — most screen readers ignore it on generic elements
 - Overusing live regions — too many announcements is worse than none
 - Setting `aria-expanded` without actually hiding/showing content
+
+## role="application" — Use With Extreme Caution
+
+Passes ALL keystrokes to JavaScript, bypassing screen reader navigation commands (H for headings, K for links, etc.). Mostly affects Windows screen readers (NVDA, JAWS).
+
+**Use ONLY when:**
+- Widget needs custom keyboard controls that conflict with screen reader commands
+- No standard ARIA role/pattern fits
+- Applied conditionally (e.g., only in fullscreen mode of a slideshow)
+
+**Without `role="application"`:** Arrow keys in NVDA/JAWS navigate headings/links/landmarks
+**With `role="application"`:** Arrow keys go directly to JavaScript handlers
+
+Always test with and without. Combine with `aria-roledescription` for a human-readable label (e.g., `aria-roledescription="Image Slideshow"`).
+
+## Accessibility Object Model (AOM) — Emerging
+
+Experimental API for setting ARIA properties programmatically via JavaScript:
+
+```javascript
+// Instead of setAttribute
+element.role = "button";
+element.ariaExpanded = "true";
+element.ariaLabel = "Close dialog";
+```
+
+Browser support is growing but not production-ready. Stick with HTML attributes for now, but be aware this API is coming. When available, it provides type-safe, directly settable ARIA properties without string manipulation.

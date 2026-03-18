@@ -1,6 +1,6 @@
 ---
 name: a11y-audit
-description: "Audit current component or page for accessibility issues. Produces a prioritized report with WCAG references and fix suggestions."
+description: "Structured accessibility assessment following a structured testing order. Asks targeted questions, walks through keyboard → tools → contrast → zoom → screen readers, produces prioritized report with WCAG references. Use when asked to \"check accessibility\", \"audit a11y\", \"test accessibility\", or before shipping UI."
 user-invokable: true
 args:
   - name: area
@@ -9,14 +9,45 @@ args:
 
 Audit the current file, component, or page for accessibility issues. Focus on {{area}} if specified, otherwise check everything.
 
-→ *Consult the accessible-web skill and its reference files for standards and patterns.*
+→ *Consult the a11y-agent skill and its reference files for standards and patterns.*
+
+## Context Gathering
+
+Before starting a comprehensive audit, ask the user:
+1. **What's the user flow?** — Which pages/routes are involved? What's the critical path?
+2. **What's the tech stack?** — React/Vue/vanilla? Client-side routing? SSR/SSG?
+3. **What's been tested before?** — Any prior audit results? Known issues?
+4. **Screen reader availability?** — Mac (VoiceOver)? Windows (NVDA)?
+5. **What's the target conformance level?** — AA (default) or AAA?
+
+Store answers for the session. Reference throughout the audit.
+
+If the user asks for a quick audit, skip context gathering and note assumptions in the report.
 
 ## Audit Process
 
-1. **Read the code** — examine rendered markup, event handlers, styles, and ARIA usage
-2. **Check against each category** (or just {{area}} if specified)
-3. **Classify issues by severity** using WCAG conformance levels
-4. **Produce a structured audit report**
+Follow this order — each step builds on the previous:
+
+### 1. Identify User Flow
+What flow are you testing? Which pages? What are the critical components?
+
+### 2. Keyboard Testing
+Tab through each page. Every mouse-operable control must also be keyboard focusable and operable. Check for visible focus indicators, trapped focus, ghost tab stops (focusable but invisible elements).
+
+### 3. Check Heading & Landmark Structure
+Verify: one h1 per page, no skipped levels, all content in landmarks. Use the document outline as a proxy for screen reader navigation.
+
+### 4. Automated Scan
+Run axe-core (or suggest the user run axe DevTools). Scan with menus/modals open — axe only tests rendered content. Note: automated tools catch only 30-50% of issues.
+
+### 5. Color Contrast
+Check suspect combinations. Regular text < 24px needs 4.5:1. Large text ≥ 24px (or ≥ 19px bold) needs 3:1. Non-text elements (borders, icons) need 3:1. Text inside UI components still needs text-level ratios.
+
+### 6. Zoom & Reflow
+Zoom to 200% minimum. Check responsive breakpoints. No horizontal scrolling at 320px CSS width. Test on actual devices if possible.
+
+### 7. Screen Reader Testing
+Test with VoiceOver + Safari (Mac) and NVDA + Chrome (Windows) if available. Check: headings announced, landmarks navigable, forms labeled, dynamic content announced, focus management works.
 
 ## Categories to Check
 
@@ -86,3 +117,8 @@ Produce a structured report:
 - [Issue] → [Fix]
 
 CRITICAL: This is an audit, not a fix. Document issues with clear explanations. Use `/a11y-fix` to implement fixes.
+
+## Storing Results
+
+After producing the report, offer to save it to `a11y-audit-results/YYYY-MM-DD-<area>.md` in the project.
+If previous results exist, note what improved and what regressed.
